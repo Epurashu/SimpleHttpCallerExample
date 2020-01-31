@@ -1,10 +1,15 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 import java.util.Objects;
 
 public class NodeModel
 {
+
+    @JsonProperty("entry")
+    NodeModel model;
 
     private String id;
 
@@ -244,6 +249,10 @@ public class NodeModel
     public void setPermissions(Object permissions)
     {
         this.permissions = permissions;
+    }
+
+    public NodeModel onModel() {
+        return this.model;
     }
 
     @Override public boolean equals(Object o)
