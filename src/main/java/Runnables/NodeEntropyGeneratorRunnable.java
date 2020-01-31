@@ -1,5 +1,6 @@
 package Runnables;
 
+import Helpers.Requests;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.net.http.HttpClient;
@@ -37,10 +38,10 @@ public class NodeEntropyGeneratorRunnable implements Runnable
         int listIterator = 0;
         do
         {
-            apiRequests.updateNode(client, authToken, OBJECT_MAPPER, nodesIds.get(listIterator), nodePrefix + listIterator);
+            apiRequests.updateNode(client, authToken, OBJECT_MAPPER, nodesIds.get(listIterator), nodePrefix + numberOfOperations);
             listIterator++;
 
-            if(listIterator > nodesIds.size())
+            if(listIterator >= nodesIds.size())
             {
                 listIterator = 0;
             }
@@ -62,6 +63,6 @@ public class NodeEntropyGeneratorRunnable implements Runnable
 
         endTime = System.currentTimeMillis();
         duration = (endTime - startTime) / 1000;
-        System.out.println(Thread.currentThread().getName() + " Deleted " + nodesIds.size() + " nodes in " + duration + "s");
+        System.out.println(Thread.currentThread().getName() + " deleted " + nodesIds.size() + " nodes in " + duration + "s");
     }
 }

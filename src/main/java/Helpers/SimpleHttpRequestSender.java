@@ -1,13 +1,11 @@
-import Runnables.ContentGenerator;
+package Helpers;
+
 import Runnables.FastFolderGeneratorRunnable;
 import Runnables.NodeEntropyGeneratorRunnable;
-import Runnables.SingleSiteGenerator;
 
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 public class SimpleHttpRequestSender
 {
@@ -33,7 +31,7 @@ public class SimpleHttpRequestSender
 
         for (int i = 0; i < EXECUTION_NUMBERS; i++)
         {
-            pool.execute(new FastFolderGeneratorRunnable(100, "-my-"));
+            pool.execute(new FastFolderGeneratorRunnable(250, "-my-"));
 //            Thread thread = new Thread(new FastFolderGeneratorRunnable(100, "-my-"));
 //            thread.start();
         }
@@ -42,12 +40,12 @@ public class SimpleHttpRequestSender
         do
         {
             String siteId = siteGenerator.generateSite();
-            ContentGenerator contentGenerator = new ContentGenerator(100, siteId);
+            ContentGenerator contentGenerator = new ContentGenerator(10, siteId);
             List<String> nodeIDs = contentGenerator.generateContent();
             contentGenerator.updateContent(nodeIDs);
-            Thread thread = new Thread(new NodeEntropyGeneratorRunnable(100, siteId, nodeIDs));
+            Thread thread = new Thread(new NodeEntropyGeneratorRunnable(15, siteId, nodeIDs));
             thread.start();
-        }while(pool.isTerminated());
+        }while(!pool.isTerminated());
 
     }
 }
